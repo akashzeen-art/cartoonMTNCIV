@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary: #FF6B6B;      /* Vibrant Watermelon */
+  --secondary: #4ECDC4;    /* Fresh Turquoise */
+  --accent: #FFE66D;       /* Sunny Yellow */
+  --dark: #1A535C;         /* Comic Outline Teal */
+  --light: #F7FFF7;        /* Soft White */
+  --comic-shadow: 6px 6px 0px #1A535C;
+  --comic-shadow-large: 10px 10px 0px #1A535C;
+  --comic-border: 4px solid #1A535C;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Fredoka', sans-serif;
+  background-color: transparent;
+  color: var(--dark);
+  overflow-x: hidden;
+  cursor: url('https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/hand-pointer.svg'), auto;
+}
+
+/* ── Glassmorphism utility ── */
+.glass {
+  background: rgba(255, 255, 255, 0.12) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border-color: rgba(255,255,255,0.3) !important;
+}
+
+/* All top-level sections get a semi-transparent glass look over the video */
+section, header, footer {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+}
+
+/* --- THE MAXIMALIST CARTOON DESIGN SYSTEM --- */
+
+.cartoon-card {
+  background: white;
+  border: var(--comic-border);
+  border-radius: 20px;
+  box-shadow: var(--comic-shadow);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.cartoon-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 10px 10px 0px var(--dark);
+}
+
+.cartoon-btn {
+  cursor: pointer;
+  border: var(--comic-border);
+  border-radius: 15px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 12px 25px;
+  box-shadow: 4px 4px 0px var(--dark);
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cartoon-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px var(--dark);
+}
+
+/* Squash and Stretch Animations */
+@keyframes squash {
+  0% { transform: scale(1, 1); }
+  30% { transform: scale(1.1, 0.9); }
+  50% { transform: scale(0.9, 1.1); }
+  100% { transform: scale(1, 1); }
+}
+
+@keyframes wiggles {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(3deg) scale(1.05); }
+  50% { transform: rotate(-3deg) scale(1); }
+  75% { transform: rotate(2deg) scale(0.95); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(2deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+.animate-squash:hover {
+  animation: squash 0.6s ease-in-out;
+}
+
+.animate-wiggle:hover {
+  animation: wiggles 0.5s ease-in-out;
+}
+
+.animate-float {
+  animation: float 4s infinite ease-in-out;
+}
+
+/* Comic Background Blobs */
+.blob {
+  position: absolute;
+  z-index: -1;
+  fill: var(--accent);
+  filter: blur(40px);
+  opacity: 0.3;
+}
+
+/* Helpers */
+.bg-pink { background-color: var(--primary); }
+.bg-sky { background-color: var(--secondary); }
+.bg-sunny { background-color: var(--accent); }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  padding: 20px 0;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .cartoon-card { box-shadow: 4px 4px 0px var(--dark); }
+  .video-grid { grid-template-columns: 1fr; }
+}
