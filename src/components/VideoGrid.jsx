@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { createPortal } from 'react-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import VideoCard from './VideoCard';
-import { PlayCircle, X } from 'lucide-react';
+import { PlayCircle } from 'lucide-react';
+import { useSubscription } from '../context/SubscriptionContext';
 
 const cartoonVideos = [
   // ── TOM ET JERRY ──
@@ -46,11 +46,8 @@ const cartoonVideos = [
 ];
 
 const VideoGrid = () => {
-  const [activeVideo, setActiveVideo] = useState(null);
   const navigate = useNavigate();
-
-  const openVideo = (video) => setActiveVideo(video);
-  const closeVideo = () => setActiveVideo(null);
+  const { requestPlay } = useSubscription();
 
   return (
     <section id="videos" style={{ padding: '80px 0', background: 'white' }}>
@@ -69,7 +66,7 @@ const VideoGrid = () => {
             <VideoCard
               key={video.id}
               {...video}
-              onClick={() => openVideo(video)}
+              onClick={() => requestPlay(video)}
             />
           ))}
         </div>
@@ -87,110 +84,6 @@ const VideoGrid = () => {
           </motion.button>
         </div>
       </div>
-
-      {/* ── VIDEO MODAL ── */}
-      {createPortal(
-      <AnimatePresence>
-        {activeVideo && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={closeVideo}
-            style={{
-              position: 'fixed',
-              inset: 0,
-              background: 'rgba(26,83,92,0.85)',
-              zIndex: 9999,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '20px',
-              backdropFilter: 'blur(6px)'
-            }}
-          >
-            <motion.div
-              initial={{ scale: 0.7, rotate: -4 }}
-              animate={{ scale: 1, rotate: 0 }}
-              exit={{ scale: 0.7, rotate: 4 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-              onClick={(e) => e.stopPropagation()}
-              style={{
-                background: 'white',
-                border: '6px solid #1A535C',
-                borderRadius: '24px',
-                boxShadow: '16px 16px 0px #FFE66D',
-                width: '100%',
-                maxWidth: '860px',
-                overflow: 'hidden',
-                position: 'relative'
-              }}
-            >
-              {/* Modal Header */}
-              <div style={{
-                background: '#FFE66D',
-                borderBottom: '4px solid #1A535C',
-                padding: '14px 20px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between'
-              }}>
-                <div>
-                  <span style={{
-                    background: '#FF6B6B',
-                    color: 'white',
-                    padding: '3px 10px',
-                    borderRadius: '10px',
-                    border: '2px solid #1A535C',
-                    fontSize: '0.78rem',
-                    fontWeight: '800',
-                    marginRight: '10px'
-                  }}>
-                    {activeVideo.episode}
-                  </span>
-                  <span style={{ fontSize: '1.1rem', fontWeight: '900', color: '#1A535C', textTransform: 'uppercase' }}>
-                    {activeVideo.title}
-                  </span>
-                </div>
-                <motion.button
-                  whileHover={{ scale: 1.15, rotate: 10 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={closeVideo}
-                  style={{
-                    background: '#FF6B6B',
-                    border: '3px solid #1A535C',
-                    borderRadius: '50%',
-                    width: '40px',
-                    height: '40px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    boxShadow: '3px 3px 0px #1A535C',
-                    flexShrink: 0
-                  }}
-                >
-                  <X size={20} color="white" />
-                </motion.button>
-              </div>
-
-              {/* Video Player */}
-              <div style={{ background: 'black', aspectRatio: '16/9', width: '100%' }}>
-                <video
-                  key={activeVideo.videoUrl}
-                  src={activeVideo.videoUrl}
-                  controls
-                  autoPlay
-                  controlsList="nodownload"
-                  onContextMenu={(e) => e.preventDefault()}
-                  style={{ width: '100%', height: '100%', display: 'block' }}
-                />
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>,
-      document.body)}
     </section>
   );
 };

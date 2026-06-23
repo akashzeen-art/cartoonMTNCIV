@@ -13,10 +13,15 @@ import CartoonMascot from './components/CartoonMascot';
 import CartoonAnimations from './components/CartoonAnimations';
 import FluidBackground from './components/FluidBackground';
 import ColoringPage from './pages/ColoringPage';
+import MyAccount from './pages/MyAccount';
+import MobileNumberModal from './components/MobileNumberModal';
+import VideoPlayerModal from './components/VideoPlayerModal';
+import { SubscriptionProvider, useSubscription } from './context/SubscriptionContext';
 
 function HomePage() {
   const isFirstVisit = !localStorage.getItem('animes_enfants_visited');
   const [loading, setLoading] = useState(isFirstVisit);
+  const { activeVideo, closePlayer, subid, productcode, msisdn } = useSubscription();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -82,16 +87,34 @@ function HomePage() {
           </motion.main>
         )}
       </AnimatePresence>
+
+      <MobileNumberModal />
+
+      <AnimatePresence>
+        {activeVideo && (
+          <VideoPlayerModal
+            key={activeVideo.id}
+            video={activeVideo}
+            subid={subid}
+            productcode={productcode}
+            msisdn={msisdn}
+            onClose={closePlayer}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/coloring" element={<ColoringPage />} />
-    </Routes>
+    <SubscriptionProvider>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/account" element={<MyAccount />} />
+        <Route path="/coloring" element={<ColoringPage />} />
+      </Routes>
+    </SubscriptionProvider>
   );
 }
 

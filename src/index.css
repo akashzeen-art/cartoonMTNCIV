@@ -25,6 +25,11 @@ body {
   cursor: url('https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/hand-pointer.svg'), auto;
 }
 
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 /* ── Glassmorphism utility ── */
 .glass {
   background: rgba(255, 255, 255, 0.12) !important;

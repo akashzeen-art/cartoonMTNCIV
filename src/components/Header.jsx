@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import { useSubscription } from '../context/SubscriptionContext';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { accountQuery } = useSubscription();
 
   const navLinks = [
     { name: 'ACCUEIL', color: '#FF6B6B', href: '#home'   },
@@ -48,7 +51,7 @@ const Header = () => {
         </motion.div>
 
         {/* Desktop Navigation */}
-        <nav style={{ display: 'flex', gap: '25px', fontWeight: '600' }} className="hide-mobile">
+        <nav style={{ display: 'flex', gap: '25px', fontWeight: '600', alignItems: 'center' }} className="hide-mobile">
           {navLinks.map((link) => (
             <motion.a
               key={link.name}
@@ -60,6 +63,21 @@ const Header = () => {
               {link.name}
             </motion.a>
           ))}
+          <Link
+            to={`/account${accountQuery}`}
+            style={{
+              fontSize: '1rem',
+              color: '#1A535C',
+              fontWeight: '700',
+              padding: '6px 14px',
+              borderRadius: '12px',
+              border: '3px solid #1A535C',
+              background: '#FFE66D',
+              textDecoration: 'none',
+            }}
+          >
+            MON COMPTE
+          </Link>
         </nav>
 
         {/* Mobile Menu Toggle */}
@@ -115,6 +133,23 @@ const Header = () => {
                     {link.name}
                   </motion.a>
                 ))}
+                <Link
+                  to={`/account${accountQuery}`}
+                  onClick={() => setIsMenuOpen(false)}
+                  style={{
+                    fontSize: '1.4rem',
+                    fontWeight: '700',
+                    color: '#1A535C',
+                    padding: '10px',
+                    borderRadius: '10px',
+                    background: '#FFE66D',
+                    border: '3px solid #1A535C',
+                    textAlign: 'center',
+                    textDecoration: 'none',
+                  }}
+                >
+                  MON COMPTE
+                </Link>
               </div>
             </div>
           </motion.div>
