@@ -22,9 +22,11 @@ const Footer = () => {
           whileHover={{ scale: 1.05 }}
           style={{ display: 'flex', alignItems: 'center', gap: '12px' }}
         >
-          <span style={{ fontSize: '2rem', fontWeight: '950', letterSpacing: '1px', textShadow: '3px 3px 0px #4ECDC4' }}>
-            Animes Enfants
-          </span>
+          <img
+            src="/logo/anime.png"
+            alt="Animes Enfants"
+            style={{ height: '72px', width: 'auto', display: 'block' }}
+          />
         </motion.div>
 
         {/* Tagline */}
@@ -37,7 +39,7 @@ const Footer = () => {
 
         {/* Copyright */}
         <p style={{ fontSize: '0.95rem', fontWeight: '600', opacity: 0.7, display: 'flex', alignItems: 'center', gap: '6px' }}>
-          © 2026 Animes Enfants — Fait avec <Heart size={16} fill="#FF6B6B" color="#FF6B6B" /> pour les amoureux des dessins animés
+          © 2026 Cartoon Box— Fait avec <Heart size={16} fill="#FF6B6B" color="#FF6B6B" /> pour les amoureux des dessins animés
         </p>
       </div>
     </footer>

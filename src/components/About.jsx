@@ -65,7 +65,7 @@ const About = () => {
                UN MONDE <br /> DE SOURIRES !
             </h2>
             <p style={{ fontSize: '1.3rem', lineHeight: '1.4', fontWeight: '500' }}>
-              Animes Enfants n'est pas qu'un site web ; c'est un immense terrain de jeu plein de rebondissements où les histoires prennent vie !
+              Cartoon Boxn'est pas qu'un site web ; c'est un immense terrain de jeu plein de rebondissements où les histoires prennent vie !
               Nous avons créé un refuge sûr pour chaque petit aventurier.
             </p>
             

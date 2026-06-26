@@ -115,7 +115,7 @@ const MyAccount = () => {
                   Mon Compte
                 </h1>
                 <p style={{ fontSize: '0.85rem', color: '#636E72', fontWeight: '600' }}>
-                  Animes Enfants — {productcode}
+                  Cartoon Box— {productcode}
                 </p>
               </div>
             </div>
