@@ -1,10 +1,10 @@
 #!/bin/bash
 # Deploy cartoonMTNCIV to cartoonsbox.com
-# Run on server as root: bash /var/www/vasnumero/cartoon_MTN_CLI/deploy/deploy-cartoonsbox.sh
+# Run on server as root: bash /var/www/vasnumero/cartoonMTN_CLI/deploy/deploy-cartoonsbox.sh
 
 set -euo pipefail
 
-PROJECT_DIR="/var/www/vasnumero/cartoon_MTN_CLI"
+PROJECT_DIR="/var/www/vasnumero/cartoonMTN_CLI"
 REPO_URL="https://github.com/akashzeen-art/cartoonMTNCIV.git"
 NGINX_SITE="cartoonsbox.com.conf"
 NGINX_AVAILABLE="/etc/nginx/sites-available/${NGINX_SITE}"
