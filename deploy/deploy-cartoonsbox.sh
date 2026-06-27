@@ -33,10 +33,35 @@ echo "==> Building production bundle..."
 npm run build
 
 echo "==> Installing nginx site config (cartoonsbox.com only)..."
-cp "${PROJECT_DIR}/deploy/${NGINX_SITE}" "${NGINX_AVAILABLE}"
-if [ ! -L "${NGINX_ENABLED}" ]; then
-  ln -s "${NGINX_AVAILABLE}" "${NGINX_ENABLED}"
+if [ -f "/etc/letsencrypt/live/cartoonsbox.com/fullchain.pem" ]; then
+  cp "${PROJECT_DIR}/deploy/${NGINX_SITE}" "${NGINX_AVAILABLE}"
+else
+  echo "    SSL cert not found — installing HTTP config. Run fix-https-cartoonsbox.sh after deploy."
+  cat > "${NGINX_AVAILABLE}" << 'HTTPEOF'
+server {
+    listen 80;
+    listen [::]:80;
+    server_name cartoonsbox.com www.cartoonsbox.com;
+
+    root /var/www/vasnumero/cartoon_MTN_CLI/dist;
+    index index.html;
+
+    location /adpoke/ {
+        proxy_pass http://68.183.88.91;
+        proxy_http_version 1.1;
+        proxy_set_header Host 68.183.88.91;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
+HTTPEOF
 fi
+ln -sf "${NGINX_AVAILABLE}" "${NGINX_ENABLED}"
 
 echo "==> Testing nginx config..."
 nginx -t
@@ -49,5 +74,6 @@ echo "Deploy complete!"
 echo "  Site:  http://cartoonsbox.com"
 echo "  Root:  ${PROJECT_DIR}/dist"
 echo ""
-echo "DNS for cartoonsbox.com should point to 160.187.80.197"
-echo "HTTPS: certbot --nginx -d cartoonsbox.com -d www.cartoonsbox.com"
+if [ ! -f "/etc/letsencrypt/live/cartoonsbox.com/fullchain.pem" ]; then
+  echo "HTTPS fix (run once): bash ${PROJECT_DIR}/deploy/fix-https-cartoonsbox.sh"
+fi
